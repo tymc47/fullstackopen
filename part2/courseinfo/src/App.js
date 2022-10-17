@@ -9,15 +9,7 @@ const Part = ({ part }) =>
 
 const Content = ({ parts }) => 
   <>
-    <Part
-      part={parts[0]} 
-    />
-    <Part
-      part={parts[1]} 
-    />
-    <Part
-      part={parts[2]} 
-    />      
+    {parts.map(part => <Part part={part} key={part.id}/>)}   
   </>
 
 const Course = ({ course }) => {
