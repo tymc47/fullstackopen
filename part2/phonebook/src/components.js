@@ -24,7 +24,12 @@ const PersonForm = (props) => {
 }
 
 const Persons = (props) => {
-    return props.personsToShow.map(person => <div key={person.name}>{person.name} {person.number}</div>)
+    return props.personsToShow.map(person => 
+      <div key={person.id}>
+        {person.name} {person.number} 
+        <button onClick={()=> props.deleteBtn(person.id)}>delete</button>
+      </div>
+      )
 }
 
 export {Filter, PersonForm, Persons}
