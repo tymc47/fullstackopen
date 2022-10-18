@@ -11,7 +11,6 @@ const App = () => {
   useEffect(() => {
     axios.get('https://restcountries.com/v3.1/all')
     .then(response => {
-      console.log("Get DB!")
       setDatabase(response.data)
     })
   }, [])
