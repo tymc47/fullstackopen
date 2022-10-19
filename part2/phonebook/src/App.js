@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Filter, PersonForm, Persons} from './components'
+import { Filter, PersonForm, Persons, Message} from './components'
 import numberService from './services'
 
 
@@ -9,6 +9,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
   const [filterMode, setFilterMode] = useState(false)
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
     numberService.getAll()
@@ -43,23 +44,38 @@ const App = () => {
       if (confirmation) {
         numberService.updateNum(existingID, newPerson)
         .then(data => {
-          setPersons(persons.map(person => person.id !== existingID ? person : data))
-      })
+          setPersons(persons.map(person => person.id !== existingID ? person : data));
+        })
+        .catch(err => {
+          setMessage({
+            type: 'fail',
+            content: `${newPerson.name} has already been removed from the server`
+          })
+        }    
+        )
       } 
       return;
     }
-
+    
     numberService.create(newPerson)
     .then(data => {
       setPersons(persons.concat(data))
+      setMessage({
+        type: 'success',
+        content: `Added ${data.name}`
+      })
       setNewNumber('')
       setNewName('')
+
+      setTimeout(() => {
+        setMessage(null)
+      }, 3000) 
     })
   }
 
   const deleteNumber = (id) => {
     console.log("to be deleted:", id)
-    if (window.confirm(`Delete ${persons[id-1].name} ?`)) {
+    if (window.confirm(`Delete ${persons.find(person => person.id === id).name} ?`)) {
       numberService.deleteNum(id)
       .then(() => {
         setPersons(persons.filter(person => person.id !== id))
@@ -71,13 +87,13 @@ const App = () => {
   const changeName = (event) => setNewName(event.target.value)
   const changeNumber = (event) => setNewNumber(event.target.value)
 
-
   return (
     <div>
+      <Message msgObj={message} />
       <h2>Phonebook</h2>
       <Filter inputChange={filterName} value={filter} />
       <h2>add a new</h2>
-      <PersonForm submitForm={addPerson} nameInput = {changeName} numberInput = {changeNumber} />
+      <PersonForm submitForm={addPerson} nameInput = {changeName} numberInput = {changeNumber} values = {[newName, newNumber]} />
       <h2>Numbers</h2>
       <Persons personsToShow={namesToShow} deleteBtn={deleteNumber}/>
       
