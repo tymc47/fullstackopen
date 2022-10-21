@@ -45,6 +45,8 @@ const App = () => {
         numberService.updateNum(existingID, newPerson)
         .then(data => {
           setPersons(persons.map(person => person.id !== existingID ? person : data));
+          setNewNumber('');
+          setNewName('');
         })
         .catch(err => {
           setMessage({
