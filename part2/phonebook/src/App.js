@@ -51,7 +51,7 @@ const App = () => {
         .catch(err => {
           setMessage({
             type: 'fail',
-            content: `${newPerson.name} has already been removed from the server`
+            content: `${err.response.data.error}`
           })
         }    
         )
@@ -72,6 +72,12 @@ const App = () => {
       setTimeout(() => {
         setMessage(null)
       }, 3000) 
+    })
+    .catch(err => {
+      setMessage({
+        type: 'fail',
+        content: `${err.response.data.error}`
+      })
     })
   }
 
