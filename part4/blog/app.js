@@ -1,10 +1,9 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const blogsRouter = require('./controller/blogsRouter')
+const blogsRouter = require('./controller/blogs')
 const mongoose = require('mongoose')
 const config = require('./utils/config')
-
 
 mongoose.connect(config.mongoUrl)
 

@@ -20,4 +20,4 @@ blogsRouter.post('/', (request, response) => {
 })
 
 
-modele.exports = blogsRouter;
+module.exports = blogsRouter;
