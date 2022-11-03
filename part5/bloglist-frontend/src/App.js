@@ -4,6 +4,7 @@ import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Message from './components/Message'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -63,7 +64,9 @@ const App = () => {
 
   const addNewBlog = async (newBlog) => {
     console.log(newBlog)
+    console.log(user)
     const result  = await blogService.create(newBlog)
+    result.user = user
     setBlogs(blogs.concat(result))
 
     setMessage({
@@ -76,6 +79,21 @@ const App = () => {
     }, 3000) 
   }
 
+  const handleLike = async (blogToUpdate) => {
+    console.log("handleLike", blogToUpdate)
+    const result = await blogService.like(blogToUpdate)
+    result.user = { id: blogToUpdate.user.id, name: blogToUpdate.user.name }
+    console.log(result)
+    setBlogs(blogs.map(blog => blog.id === result.id ? result : blog))
+  }
+
+  const handleRemove = async (blogToRemove) => {
+    if(!window.confirm(`Remove blog ${blogToRemove.title} by ${blogToRemove.author}`)) return
+
+    console.log('remove blog', blogToRemove)
+    await blogService.remove(blogToRemove)
+    setBlogs(blogs.filter(blog => blog.id !== blogToRemove.id))
+  }
 
 
   if (user === null) {
@@ -106,10 +124,13 @@ const App = () => {
         {user.name} logged in 
         <button onClick={handleLogout}>Logout</button>
       </div>
-      <BlogForm handleNewBlog={addNewBlog}/>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
+      <Togglable showLabel="new blog" hideLabel="cancel">
+        <BlogForm handleNewBlog={addNewBlog}/>
+      </Togglable>
+      {blogs
+        .sort((a , b) => b.likes - a.likes)
+        .map(blog => <Blog key={blog.id} blog={blog} updateLike={handleLike} showRemove={user.username === blog.user.username} removeBlog={handleRemove}/>)
+      }
     </div>
   )
 }
