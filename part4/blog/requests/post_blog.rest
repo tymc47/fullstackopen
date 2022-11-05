@@ -24,11 +24,11 @@ Content-Type: application/json
 ###
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InR5bWFrIiwiaWQiOiI2MzYyNjhiNzVmNGI1MDM3YjA5Mzk4MTIiLCJpYXQiOjE2NjczOTk0OTd9.NqI9gyU4hOPnD_30Szqbw4YrLu3u7MzBGX2KmiKo6zA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InR5bWFrIiwiaWQiOiI2MzYyNjhiNzVmNGI1MDM3YjA5Mzk4MTIiLCJpYXQiOjE2Njc0NjUyNTB9.MHwL0xGOXfsOoSf7fGyKwizIjoL25nrYOTrp3NhXJHc
 
 {
-    "title": "trying new middleware extractor user",
+    "title": "trying token with backend",
     "author": "Ty Mak",
-    "url": "AAAAAA.com",
+    "url": "BBB.com",
     "likes": 111
 }

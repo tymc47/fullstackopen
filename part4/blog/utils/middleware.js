@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken')
 const tokenExtractor = (request, response, next) => {
     const authorization = request.get('authorization')
 
+    console.log(`authorization: ${authorization}`)
+
     if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
         request.token = authorization.substring(7)
     } else request.token = null
@@ -12,6 +14,7 @@ const tokenExtractor = (request, response, next) => {
 }
 
 const userExtractor = async (request, response, next) => {
+    console.log("is token presnet", request.token)
 
     if (request.token) {
         const decodedToken = jwt.verify(request.token, process.env.SECRET)
