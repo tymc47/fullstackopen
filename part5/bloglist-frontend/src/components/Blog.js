@@ -24,7 +24,7 @@ const Blog = ({ blog, updateLike, showRemove, removeBlog }) => {
   };
 
   return(
-    <div style={blogStyle}>
+    <div className='blog-container' style={blogStyle}>
       <div>
         {blog.title} {blog.author}
         <button style={hideWithDetails} onClick={toggleShowDetails}>show</button>

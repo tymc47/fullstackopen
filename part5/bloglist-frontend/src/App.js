@@ -124,7 +124,7 @@ const App = () => {
       <Message msgObj={message} />
       <div>
         {user.name} logged in
-        <button onClick={handleLogout}>Logout</button>
+        <button onClick={handleLogout}>logout</button>
       </div>
       <Togglable showLabel="new blog" hideLabel="cancel" ref={blogFormRef}>
         <BlogForm handleNewBlog={addNewBlog}/>
