@@ -14,18 +14,25 @@ import blogService from './services/blogs';
 import { setNotification } from './reducers/notificationReducer';
 import { createNewBlog, setBlogs, updateBlog, removeBlog } from './reducers/blogReducer';
 import { setLoggedUser } from './reducers/loggedUserReducer';
-import { Route, Routes, useMatch } from 'react-router-dom';
+import { Route, Routes, useMatch, useNavigate } from 'react-router-dom';
+import User from './components/User';
+import Blog from './components/Blog';
+
+import { Container } from '@mui/material';
 
 const App = () => {
   const blogFormRef = useRef();
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { blogs, notification, loggedUser } = useSelector((state) => state);
 
   console.log('in app', blogs, loggedUser);
 
-  const match = useMatch('/users/:id');
-  console.log('match', match);
+  const matchUser = useMatch('/users/:id');
+  const user = matchUser === null ? null : matchUser.params.id;
+  const matchBlog = useMatch('/blogs/:id');
+  const blog = matchBlog === null ? null : matchBlog.params.id;
 
   useEffect(() => {
     blogService.getAll().then((blogs) => dispatch(setBlogs(blogs)));
@@ -80,25 +87,31 @@ const App = () => {
     console.log('remove blog', blogToRemove);
     await blogService.remove(blogToRemove);
     dispatch(removeBlog(blogToRemove.id));
+    navigate('/');
   };
 
   if (loggedUser === null) {
     return (
-      <div>
+      <Container>
         <h2>Log in to application</h2>
         <Notification msgObj={notification} />
         <LoginForm />
-      </div>
+      </Container>
     );
   }
 
   return (
-    <div>
+    <Container>
       <NavBar user={loggedUser} logoutBtn={handleLogout} />
       <h2>Blog App</h2>
       <Notification msgObj={notification} />
 
       <Routes>
+        <Route path="/users/:id" element={<User userId={user} />} />
+        <Route
+          path="/blogs/:id"
+          element={<Blog blogId={blog} likeBlog={handleLike} removeBlog={handleRemove} loggedUser={loggedUser} />}
+        />
         <Route
           path="/"
           element={
@@ -106,13 +119,13 @@ const App = () => {
               <Togglable showLabel="new blog" hideLabel="cancel" ref={blogFormRef}>
                 <BlogForm handleNewBlog={addNewBlog} />
               </Togglable>
-              <BlogList blogs={blogs} likeBlog={handleLike} removeBlog={handleRemove} loggedUser={loggedUser} />
+              <BlogList blogs={blogs} />
             </div>
           }
         />
-        <Route path="/users" element={<Users user={match} />} />
+        <Route path="/users" element={<Users />} />
       </Routes>
-    </div>
+    </Container>
   );
 };
 

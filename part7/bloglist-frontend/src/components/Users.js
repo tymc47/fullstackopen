@@ -3,9 +3,8 @@ import { setUsers } from '../reducers/userReducer';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import User from './User';
 
-const Users = ({ user }) => {
+const Users = () => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
 
@@ -14,11 +13,6 @@ const Users = ({ user }) => {
       dispatch(setUsers(users));
     });
   }, []);
-
-  if (user) {
-    const target = users.find((x) => x.id === user.id);
-    return <User user={target} />;
-  }
 
   return (
     <div>

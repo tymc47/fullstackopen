@@ -1,28 +1,31 @@
+import { AppBar, Toolbar, IconButton, Button, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const NavBar = ({ user, logoutBtn }) => {
-  const padding = {
-    padding: 5,
+  const spanStyle = {
+    padding: 10,
   };
   return (
-    <div>
-      <Link style={padding} to="/">
-        blogs
-      </Link>
-      <Link style={padding} to="/users">
-        users
-      </Link>
-      {user ? (
+    <AppBar position="static">
+      <Toolbar>
+        <Box sx={{ flexGrow: 1 }}>
+          <IconButton edge="start" color="inherit" aria-label="menu"></IconButton>
+          <Button color="inherit" component={Link} to="/">
+            blogs
+          </Button>
+          <Button color="inherit" component={Link} to="/users">
+            users
+          </Button>
+        </Box>
+
         <>
-          <em>{user.name} logged in</em>
-          <button onClick={logoutBtn}>logout</button>
+          <span style={spanStyle}>{user.name} logged in</span>
+          <Button variant="outlined" color="inherit" onClick={logoutBtn}>
+            logout
+          </Button>
         </>
-      ) : (
-        <Link style={padding} to="/login">
-          login
-        </Link>
-      )}
-    </div>
+      </Toolbar>
+    </AppBar>
   );
 };
 

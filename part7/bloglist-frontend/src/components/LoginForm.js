@@ -5,6 +5,7 @@ import loginService from '../services/login';
 import blogService from '../services/blogs';
 import { setLoggedUser } from '../reducers/loggedUserReducer';
 import { setNotification } from '../reducers/notificationReducer';
+import { Button, TextField } from '@mui/material';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -33,7 +34,7 @@ const LoginForm = () => {
     } catch (exception) {
       dispatch(
         setNotification({
-          type: 'fail',
+          type: 'error',
           content: `${exception.response.data.error}`,
         })
       );
@@ -47,28 +48,29 @@ const LoginForm = () => {
   return (
     <form onSubmit={handleLogin}>
       <div>
-        username
-        <input
-          type="text"
-          id="username-input"
+        <TextField
+          variant="outlined"
+          label="username"
+          size="small"
+          margin="dense"
           value={username}
-          name="Username"
           onChange={({ target }) => setUsername(target.value)}
         />
       </div>
       <div>
-        password
-        <input
+        <TextField
+          variant="outlined"
           type="password"
-          id="password-input"
+          label="password"
+          size="small"
+          margin="dense"
           value={password}
-          name="Password"
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button id="login-btn" type="submit">
+      <Button variant="outlined" id="login-btn" type="submit" margin="dense">
         login
-      </button>
+      </Button>
     </form>
   );
 };
