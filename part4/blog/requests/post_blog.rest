@@ -32,3 +32,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InR5b
     "url": "BBB.com",
     "likes": 111
 }
+
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InR5bWFrIiwiaWQiOiI2MzYyNjhiNzVmNGI1MDM3YjA5Mzk4MTIiLCJpYXQiOjE2Njc0NjUyNTB9.MHwL0xGOXfsOoSf7fGyKwizIjoL25nrYOTrp3NhXJHc
+
+{
+    "title": "For Comment Testing",
+    "author": "Terry Mak",
+    "url": "react.org/testing-comment",
+    "likes": 11
+}

@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/blogs/636c827278ef249fa66aadb3/comments
+Content-Type: application/json
+
+{
+    "content": "second comment"
+}
+
+###
+GET http://localhost:3003/api/blogs/636c6b9552d32dc53e630170/comments
