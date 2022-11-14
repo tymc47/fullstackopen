@@ -28,6 +28,7 @@ const ALL_AUTHORS = gql`
     allAuthors {
       name
       born
+      bookCount
       id
     }
   }
@@ -79,6 +80,18 @@ const LOGIN = gql`
   }
 `;
 
+const BOOK_ADDED = gql`
+  subscription {
+    bookAdded {
+      title
+      published
+      author {
+        name
+      }
+    }
+  }
+`;
+
 export {
   CREATE_BOOK,
   ALL_AUTHORS,
@@ -87,4 +100,5 @@ export {
   LOGIN,
   ALL_GENRES,
   CURRENT_USER,
+  BOOK_ADDED,
 };

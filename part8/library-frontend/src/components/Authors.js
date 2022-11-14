@@ -26,6 +26,7 @@ const Authors = (props) => {
     setBorn("");
   };
 
+  console.log(authors);
   return (
     <div>
       <h2>authors</h2>
