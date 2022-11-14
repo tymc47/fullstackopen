@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useApolloClient } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { LOGIN } from "../queries";
 
@@ -8,17 +8,20 @@ const LoginForm = (props) => {
   const [login, result] = useMutation(LOGIN, {
     onError: (err) => console.log(err),
   });
+  const client = useApolloClient();
 
   useEffect(() => {
     if (result.data) {
-      const token = result.data.login.value;
-      props.setToken(token);
       setUsername("");
       setPassword("");
-      localStorage.setItem("user-token", token);
+      const token = result.data.login.value;
+      props.setToken(token);
       props.setPage("books");
+      localStorage.setItem("user-token", token);
+      client.resetStore();
     }
   }, [result.data]); // eslint-disable-line
+
   if (!props.show) return null;
 
   const handleLogin = async (event) => {
