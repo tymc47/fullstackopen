@@ -1,21 +1,21 @@
-interface MultiplyValues {
-  height: number;
-  weight: number;
-}
+// interface MultiplyValues {
+//   height: number;
+//   weight: number;
+// }
 
-const parseArguments = (args: Array<string>): MultiplyValues => {
-  if (args.length < 4) throw new Error("Not enough arguments");
-  if (args.length > 4) throw new Error("Too many arguments");
+// const parseArguments = (args: Array<string>): MultiplyValues => {
+//   if (args.length < 4) throw new Error("Not enough arguments");
+//   if (args.length > 4) throw new Error("Too many arguments");
 
-  if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
-    return {
-      height: Number(args[2]),
-      weight: Number(args[3]),
-    };
-  } else {
-    throw new Error("Provided values were not numbers!");
-  }
-};
+//   if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
+//     return {
+//       height: Number(args[2]),
+//       weight: Number(args[3]),
+//     };
+//   } else {
+//     throw new Error("Provided values were not numbers!");
+//   }
+// };
 
 const calculateBmi = (height: number, weight: number) => {
   const bmi = weight / ((height * height) / 10000);
@@ -27,15 +27,18 @@ const calculateBmi = (height: number, weight: number) => {
   else result = "Overweight (severely obese)";
 
   console.log(result);
+  return result;
 };
 
-try {
-  const { height, weight } = parseArguments(process.argv);
-  calculateBmi(height, weight);
-} catch (err: unknown) {
-  let errorMsg = "Something went wrong.";
-  if (err instanceof Error) {
-    errorMsg += " Error: " + err.message;
-  }
-  console.log(errorMsg);
-}
+// try {
+//   const { height, weight } = parseArguments(process.argv);
+//   calculateBmi(height, weight);
+// } catch (err: unknown) {
+//   let errorMsg = "Something went wrong.";
+//   if (err instanceof Error) {
+//     errorMsg += " Error: " + err.message;
+//   }
+//   console.log(errorMsg);
+// }
+
+export default calculateBmi;

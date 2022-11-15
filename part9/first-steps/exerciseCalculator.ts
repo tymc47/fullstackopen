@@ -48,7 +48,7 @@ const calculateExercises = (hours: Array<number>, target: number) => {
     average: average,
   };
 
-  console.log(result);
+  return result;
 };
 
 try {
@@ -61,3 +61,5 @@ try {
   }
   console.log(errorMsg);
 }
+
+export default calculateExercises;
