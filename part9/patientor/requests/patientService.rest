@@ -1,0 +1,13 @@
+POST http://localhost:3001/api/patients
+Content-Type: application/json
+
+{
+    "name": "Terry Mak",
+    "dateOfBirth": "1998-07-24",
+    "ssn": "023126-12X",
+    "gender": "male",
+    "occupation": "Student"
+}
+
+### Get all patients
+Get http://localhost:3001/api/patients
