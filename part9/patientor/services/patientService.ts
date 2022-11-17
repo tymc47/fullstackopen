@@ -1,14 +1,14 @@
-import patientData from "../data/patients.json";
-import { newPatientEntry, PatientEntry } from "../types";
+import patientData from "../data/patients";
+import { newPatient, Patient, PublicPatient } from "../types";
 import { v1 as uuid } from "uuid";
 
-const patients: Array<PatientEntry> = patientData;
+const patients: Array<Patient> = patientData;
 
-const getAll = (): Array<PatientEntry> => {
+const getAll = (): Array<Patient> => {
   return patients;
 };
 
-const getNonSensitiveAll = (): Array<Omit<PatientEntry, "ssn">> => {
+const getNonSensitiveAll = (): PublicPatient[] => {
   return patients.map(({ id, name, dateOfBirth, gender, occupation }) => ({
     id,
     dateOfBirth,
@@ -18,8 +18,16 @@ const getNonSensitiveAll = (): Array<Omit<PatientEntry, "ssn">> => {
   }));
 };
 
-const addNew = (newEntry: newPatientEntry): PatientEntry => {
-  const newPatient: PatientEntry = {
+const getOne = (id: string): Patient | undefined => {
+  const target = patients.find((patient) => patient.id === id);
+
+  if (target) return target;
+
+  return undefined;
+};
+
+const addNew = (newEntry: newPatient): Patient => {
+  const newPatient: Patient = {
     ...newEntry,
     id: uuid(),
   };
@@ -31,4 +39,5 @@ export default {
   getAll,
   getNonSensitiveAll,
   addNew,
+  getOne,
 };

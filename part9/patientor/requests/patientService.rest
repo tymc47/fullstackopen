@@ -11,3 +11,6 @@ Content-Type: application/json
 
 ### Get all patients
 Get http://localhost:3001/api/patients
+
+### Get one patient
+GET http://localhost:3001/api/patients/d2773336-f723-11e9-8f0b-362b9e155667
