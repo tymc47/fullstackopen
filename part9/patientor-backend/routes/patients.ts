@@ -1,6 +1,6 @@
 import express from "express";
 import patientService from "../services/patientService";
-import parsePatientInput from "../util";
+import { parsePatientInput, parseEntryInput } from "../util";
 
 const router = express.Router();
 
@@ -28,6 +28,25 @@ router.post("/", (req, res) => {
     const newPatientEntry = parsePatientInput(req.body);
     const newEntry = patientService.addNew(newPatientEntry);
     res.send(newEntry);
+  } catch (err: unknown) {
+    let errMsg = "Something went wrong. ";
+    if (err instanceof Error) {
+      errMsg += "Error: " + err.message;
+    }
+    res.status(400).send(errMsg);
+  }
+});
+
+router.post("/:id/entries", (req, res) => {
+  console.log("Post entry to patient");
+
+  try {
+    const patient = patientService.getOne(req.params.id);
+    if (!patient) throw new Error("invalid ID");
+    const newEntry = parseEntryInput(req.body);
+    const result = patientService.addEntry(newEntry, patient);
+
+    res.send(result);
   } catch (err: unknown) {
     let errMsg = "Something went wrong. ";
     if (err instanceof Error) {
