@@ -25,5 +25,8 @@ Content-Type: application/json
     "type": "OccupationalHealthcare",
     "employerName": "Facebook.Inc",
     "description": "Prescriptions renewed.",
-    "diagnosisCodes": ["M24.2"]
+    "sickLeave": { 
+        "startDate": "2022-10-12",
+        "endDate": "2022-10-14"
+        }
 }

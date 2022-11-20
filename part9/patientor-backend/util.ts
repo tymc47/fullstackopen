@@ -112,7 +112,7 @@ const parseDiagnosisCodes = (codes: any): Array<Diagnosis["code"]> => {
 };
 
 const parseHealthCheckRating = (rating: unknown): HealthCheckRating => {
-  if (!rating || !isRating(rating)) {
+  if (rating === undefined || !isRating(rating)) {
     throw new Error("Incorrect health check rating");
   }
   return rating;
@@ -198,11 +198,12 @@ const parseOccupationalEntry = (
 export const parseEntryInput = (object: any): EntryWithoutId => {
   if (!object.type) throw new Error("missing entry type");
   let newEntry;
+  console.log(object.type);
   switch (object.type) {
     case "HealthCheck":
       newEntry = parseHealthCheckEntry(object);
       break;
-    case "Hosptial":
+    case "Hospital":
       newEntry = parseHospitalEntry(object);
       break;
     case "OccupationalHealthcare":
@@ -215,7 +216,7 @@ export const parseEntryInput = (object: any): EntryWithoutId => {
       throw new Error("incorrect type for entry");
   }
 
-  if (object.diagnosisCodes) {
+  if (object.diagnosisCodes && object.diagnosisCodes.length !== 0) {
     newEntry.diagnosisCodes = parseDiagnosisCodes(object.diagnosisCodes);
   }
 
