@@ -132,19 +132,18 @@ export const parsePatientInput = (object: any): newPatient => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const isDischarge = (obj: any): obj is Discharge => {
-  if (!obj.criteria || !obj.date) return false;
-  if (!isString(obj.criteria) || !isString(obj.date)) return false;
-
-  return true;
-};
-
-const parseDischarge = (discharge: unknown): Discharge => {
-  if (!discharge || !isDischarge(discharge)) {
+const parseDischarge = (discharge: any): Discharge => {
+  if (!discharge.criteria || !discharge.date) {
+    throw new Error("missing or misformatted discharge");
+  }
+  if (!isString(discharge.criteria) || !isString(discharge.criteria)) {
     throw new Error("missing or misformatted discharge");
   }
 
-  return discharge;
+  return {
+    criteria: String(discharge.criteria),
+    date: parseDate(discharge.date),
+  };
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
