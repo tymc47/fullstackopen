@@ -1,5 +1,5 @@
 import { Patient } from "../types";
-import parsePatientInput from "../util";
+import { parsePatientInput } from "../util";
 
 const rawData = [
   {
