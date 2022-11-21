@@ -3,16 +3,24 @@ import { Formik, Form } from "formik";
 import { useState } from "react";
 
 import { FormOption } from "../AddPatientModal/FormField";
-import { HealthCheckEntry, HospitalEntry } from "../types";
+import {
+  HealthCheckEntry,
+  HospitalEntry,
+  OccupationalHealthcareEntry,
+} from "../types";
 import { SelectField } from "../AddPatientModal/FormField";
 import HealthCheckEntryForm from "./HealthCheckEntryForm";
 import HospitalEntryForm from "./HospitalEntryForm";
+import OccupationalHealthcareEntryForm from "./OccupationalHealthcareEntryForm";
 
 export type HealthCheckFormValues = Omit<HealthCheckEntry, "id">;
 export type HospitalFormValues = Omit<HospitalEntry, "id">;
+export type OccupationalFormValues = Omit<OccupationalHealthcareEntry, "id">;
 
-export type FormValues = HealthCheckFormValues | HospitalFormValues;
-export type FormTypes = "HealthCheck" | "Hospital";
+export type FormValues =
+  | HealthCheckFormValues
+  | HospitalFormValues
+  | OccupationalFormValues;
 
 export interface formProps {
   onSubmit: (values: FormValues) => void;
@@ -26,15 +34,16 @@ export interface formProps {
 // }
 
 const formOptions: FormOption[] = [
-  { value: "HealthCheck", label: "HealthCheck" },
+  { value: "HealthCheck", label: "Health Check" },
   { value: "Hospital", label: "Hospital" },
+  { value: "OccupationalHealthcare", label: "Occupational Healthcare" },
 ];
 
 export const AddEntryForm = ({ onSubmit, onCancel }: formProps) => {
-  const [formType, setFormType] = useState<FormTypes>("HealthCheck");
+  const [formType, setFormType] = useState<FormOption["value"]>("HealthCheck");
   const [changeForm, setChangeForm] = useState<boolean>(false);
 
-  const onNext = ({ type }: { type: FormTypes }) => {
+  const onNext = ({ type }: { type: FormOption["value"] }) => {
     console.log(type);
     setFormType(type);
     setChangeForm(true);
@@ -91,7 +100,13 @@ export const AddEntryForm = ({ onSubmit, onCancel }: formProps) => {
     return <HealthCheckEntryForm onSubmit={onSubmit} onCancel={onCancel} />;
   else if (changeForm && formType === "Hospital")
     return <HospitalEntryForm onSubmit={onSubmit} onCancel={onCancel} />;
-  return null;
+  else
+    return (
+      <OccupationalHealthcareEntryForm
+        onSubmit={onSubmit}
+        onCancel={onCancel}
+      />
+    );
 };
 
 export default AddEntryForm;

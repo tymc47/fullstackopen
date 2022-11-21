@@ -22,7 +22,7 @@ const OccupationalHealthcare = ({
           <>
             <Typography variant="body1">Sick Leave:</Typography>
             <Typography variant="body2">
-              {`${entry.sickLeave.startDate} - ${entry.sickLeave.endDate}`}
+              {`from ${entry.sickLeave.startDate} to ${entry.sickLeave.endDate}`}
             </Typography>
           </>
         ) : null}

@@ -24,7 +24,7 @@ export type RatingOption = {
 };
 
 export type FormOption = {
-  value: "HealthCheck" | "Hospital";
+  value: "HealthCheck" | "Hospital" | "OccupationalHealthcare";
   label: string;
 };
 

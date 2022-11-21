@@ -22,7 +22,8 @@ const formInitialValues: HospitalFormValues = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const formValidation = (values: any) => {
   const requiredError = "Field is required";
-  const errors: { [field: string]: string } = {};
+  const errors: { [field: string]: string | object } = {};
+  console.log(errors);
   if (!values.description) {
     errors.description = requiredError;
   }
@@ -32,11 +33,11 @@ const formValidation = (values: any) => {
   if (!values.specialist) {
     errors.specialist = requiredError;
   }
-  if (!values.discharge.date) {
-    errors.dischargeDate = requiredError;
-  }
-  if (!values.discharge.criteria) {
-    errors.dischargeCriteria = requiredError;
+  if (!values.discharge.date || !values.discharge.criteria) {
+    errors.discharge = {
+      date: requiredError,
+      criteria: requiredError,
+    };
   }
   return errors;
 };
