@@ -1,71 +1,31 @@
 import { TextField } from "../AddPatientModal/FormField";
 import { Field } from "formik";
 import { DiagnosisSelection } from "../AddPatientModal/FormField";
-import { formProps } from "./AddEntryForm";
+import { formProps, FormValues } from "./AddEntryForm";
 import { Formik, Form } from "formik";
 import { Grid, Button } from "@material-ui/core";
 import { useStateValue } from "../state";
 
+const formInitialValues: FormValues = {
+  type: "OccupationalHealthcare" as const,
+  description: "",
+  date: "",
+  specialist: "",
+  employerName: "",
+  sickLeave: {
+    startDate: "",
+    endDate: "",
+  },
+  diagnosisCodes: [],
+};
+
 const OccupationalHealthcareEntryForm = ({ onSubmit, onCancel }: formProps) => {
   const [{ diagnoses }] = useStateValue();
-
-  const FormComponent = (
-    <>
-      <h3>Occupational Healthcare Entry</h3>
-      <Field
-        label="Description"
-        placeholder="Description"
-        name="description"
-        component={TextField}
-      />
-      <Field
-        label="Specialist"
-        placeholder="Specialist"
-        name="specialist"
-        component={TextField}
-      />
-      <Field
-        label="Employer"
-        placeholder="Employer"
-        name="employerName"
-        component={TextField}
-      />
-      <Field
-        label="Date"
-        placeholder="YYYY-MM-DD"
-        name="date"
-        component={TextField}
-      />
-      <Field
-        label="Sick Leave Start Date"
-        placeholder="YYYY-MM-DD"
-        name="sickLeave.startDate"
-        component={TextField}
-      />
-      <Field
-        label="Sick Leave End Date"
-        placeholder="YYYY-MM-DD"
-        name="sickLeave.endDate"
-        component={TextField}
-      />
-    </>
-  );
 
   return (
     <Formik
       enableReinitialize
-      initialValues={{
-        type: "OccupationalHealthcare" as const,
-        description: "",
-        date: "",
-        specialist: "",
-        employerName: "",
-        sickLeave: {
-          startDate: "",
-          endDate: "",
-        },
-        diagnosisCodes: [],
-      }}
+      initialValues={formInitialValues}
       onSubmit={onSubmit}
       validate={(values) => {
         const requiredError = "Field is required";
@@ -88,7 +48,43 @@ const OccupationalHealthcareEntryForm = ({ onSubmit, onCancel }: formProps) => {
       {({ isValid, dirty, setFieldValue, setFieldTouched }) => {
         return (
           <Form className="form ui">
-            {FormComponent}
+            <h3>Occupational Healthcare Entry</h3>
+            <Field
+              label="Description"
+              placeholder="Description"
+              name="description"
+              component={TextField}
+            />
+            <Field
+              label="Specialist"
+              placeholder="Specialist"
+              name="specialist"
+              component={TextField}
+            />
+            <Field
+              label="Employer"
+              placeholder="Employer"
+              name="employerName"
+              component={TextField}
+            />
+            <Field
+              label="Date"
+              placeholder="YYYY-MM-DD"
+              name="date"
+              component={TextField}
+            />
+            <Field
+              label="Sick Leave Start Date"
+              placeholder="YYYY-MM-DD"
+              name="sickLeave.startDate"
+              component={TextField}
+            />
+            <Field
+              label="Sick Leave End Date"
+              placeholder="YYYY-MM-DD"
+              name="sickLeave.endDate"
+              component={TextField}
+            />
             <DiagnosisSelection
               setFieldValue={setFieldValue}
               setFieldTouched={setFieldTouched}

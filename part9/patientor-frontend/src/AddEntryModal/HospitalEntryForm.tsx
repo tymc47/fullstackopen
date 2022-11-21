@@ -19,65 +19,6 @@ const formInitialValues: HospitalFormValues = {
   diagnosisCodes: [],
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const formValidation = (values: any) => {
-  const requiredError = "Field is required";
-  const errors: { [field: string]: string | object } = {};
-  console.log(errors);
-  if (!values.description) {
-    errors.description = requiredError;
-  }
-  if (!values.date) {
-    errors.date = requiredError;
-  }
-  if (!values.specialist) {
-    errors.specialist = requiredError;
-  }
-  if (!values.discharge.date || !values.discharge.criteria) {
-    errors.discharge = {
-      date: requiredError,
-      criteria: requiredError,
-    };
-  }
-  return errors;
-};
-
-const FormComponent = (
-  <>
-    <h3>Hospital Entry Form</h3>
-    <Field
-      label="Description"
-      placeholder="Description"
-      name="description"
-      component={TextField}
-    />
-    <Field
-      label="Specialist"
-      placeholder="Specialist"
-      name="specialist"
-      component={TextField}
-    />
-    <Field
-      label="Date"
-      placeholder="YYYY-MM-DD"
-      name="date"
-      component={TextField}
-    />
-    <Field
-      label="Discharge Date"
-      placeholder="YYYY-MM-DD"
-      name="discharge.date"
-      component={TextField}
-    />
-    <Field
-      label="Discharge Criteria"
-      placeholder="Discharge Criteria"
-      name="discharge.criteria"
-      component={TextField}
-    />
-  </>
-);
-
 const HospitalEntryForm = ({ onSubmit, onCancel }: formProps) => {
   const [{ diagnoses }] = useStateValue();
 
@@ -86,12 +27,62 @@ const HospitalEntryForm = ({ onSubmit, onCancel }: formProps) => {
       enableReinitialize
       initialValues={formInitialValues}
       onSubmit={onSubmit}
-      validate={formValidation}
+      validate={(values) => {
+        const requiredError = "Field is required";
+        const errors: { [field: string]: string | object } = {};
+        console.log(errors);
+        if (!values.description) {
+          errors.description = requiredError;
+        }
+        if (!values.date) {
+          errors.date = requiredError;
+        }
+        if (!values.specialist) {
+          errors.specialist = requiredError;
+        }
+        if (!values.discharge.date || !values.discharge.criteria) {
+          errors.discharge = {
+            date: requiredError,
+            criteria: requiredError,
+          };
+        }
+        return errors;
+      }}
     >
       {({ isValid, dirty, setFieldValue, setFieldTouched }) => {
         return (
           <Form className="form ui">
-            {FormComponent}
+            <h3>Hospital Entry Form</h3>
+            <Field
+              label="Description"
+              placeholder="Description"
+              name="description"
+              component={TextField}
+            />
+            <Field
+              label="Specialist"
+              placeholder="Specialist"
+              name="specialist"
+              component={TextField}
+            />
+            <Field
+              label="Date"
+              placeholder="YYYY-MM-DD"
+              name="date"
+              component={TextField}
+            />
+            <Field
+              label="Discharge Date"
+              placeholder="YYYY-MM-DD"
+              name="discharge.date"
+              component={TextField}
+            />
+            <Field
+              label="Discharge Criteria"
+              placeholder="Discharge Criteria"
+              name="discharge.criteria"
+              component={TextField}
+            />
             <DiagnosisSelection
               setFieldValue={setFieldValue}
               setFieldTouched={setFieldTouched}

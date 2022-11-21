@@ -3,7 +3,7 @@ import { HealthCheckRating } from "../types";
 import { TextField } from "../AddPatientModal/FormField";
 import { Field } from "formik";
 import { SelectField, DiagnosisSelection } from "../AddPatientModal/FormField";
-import { formProps } from "./AddEntryForm";
+import { formProps, FormValues } from "./AddEntryForm";
 import { Formik, Form } from "formik";
 import { Grid, Button } from "@material-ui/core";
 import { useStateValue } from "../state";
@@ -15,49 +15,22 @@ const ratingOptions: RatingOption[] = [
   { value: HealthCheckRating.CriticalRisk, label: "Critical Risk" },
 ];
 
+const formInitialValues: FormValues = {
+  type: "HealthCheck" as const,
+  description: "",
+  date: "",
+  specialist: "",
+  healthCheckRating: HealthCheckRating.Healthy,
+  diagnosisCodes: [],
+};
+
 const HealthCheckEntryForm = ({ onSubmit, onCancel }: formProps) => {
   const [{ diagnoses }] = useStateValue();
-
-  const FormComponent = (
-    <>
-      <h3>Health Check Entry</h3>
-      <Field
-        label="Description"
-        placeholder="Description"
-        name="description"
-        component={TextField}
-      />
-      <Field
-        label="Specialist"
-        placeholder="Specialist"
-        name="specialist"
-        component={TextField}
-      />
-      <Field
-        label="Date"
-        placeholder="YYYY-MM-DD"
-        name="date"
-        component={TextField}
-      />
-      <SelectField
-        label="Health Check Rating"
-        name="healthCheckRating"
-        options={ratingOptions}
-      />
-    </>
-  );
 
   return (
     <Formik
       enableReinitialize
-      initialValues={{
-        type: "HealthCheck" as const,
-        description: "",
-        date: "",
-        specialist: "",
-        healthCheckRating: HealthCheckRating.Healthy,
-        diagnosisCodes: [],
-      }}
+      initialValues={formInitialValues}
       onSubmit={onSubmit}
       validate={(values) => {
         const requiredError = "Field is required";
@@ -77,7 +50,30 @@ const HealthCheckEntryForm = ({ onSubmit, onCancel }: formProps) => {
       {({ isValid, dirty, setFieldValue, setFieldTouched }) => {
         return (
           <Form className="form ui">
-            {FormComponent}
+            <h3>Health Check Entry</h3>
+            <Field
+              label="Description"
+              placeholder="Description"
+              name="description"
+              component={TextField}
+            />
+            <Field
+              label="Specialist"
+              placeholder="Specialist"
+              name="specialist"
+              component={TextField}
+            />
+            <Field
+              label="Date"
+              placeholder="YYYY-MM-DD"
+              name="date"
+              component={TextField}
+            />
+            <SelectField
+              label="Health Check Rating"
+              name="healthCheckRating"
+              options={ratingOptions}
+            />
             <DiagnosisSelection
               setFieldValue={setFieldValue}
               setFieldTouched={setFieldTouched}
