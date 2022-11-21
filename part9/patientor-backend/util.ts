@@ -184,13 +184,19 @@ const parseOccupationalEntry = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   object: any
 ): Omit<OccupationalHealthcareEntry, "id"> => {
-  return {
+  const entry: Omit<OccupationalHealthcareEntry, "id"> = {
     type: "OccupationalHealthcare",
     description: parseDescription(object.description),
     date: parseDate(object.date),
     specialist: parseName(object.specialist),
     employerName: parseName(object.employerName),
   };
+
+  if (object.sickLeave) {
+    entry.sickLeave = parseSickLeave(object.sickLeave);
+  }
+
+  return entry;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -207,9 +213,6 @@ export const parseEntryInput = (object: any): EntryWithoutId => {
       break;
     case "OccupationalHealthcare":
       newEntry = parseOccupationalEntry(object);
-      if (object.sickLeave) {
-        newEntry.sickLeave = parseSickLeave(object.sickLeave);
-      }
       break;
     default:
       throw new Error("incorrect type for entry");
